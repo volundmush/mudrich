@@ -67,6 +67,19 @@ RANDOM_CODES = ["b", "g", "c", "r", "m", "y", "w", "B", "G", "C", "R", "M", "W",
 RE_COLOR = re.compile(r"@(n|d|D|b|B|g|G|c|C|r|R|m|M|y|Y|w|W|x|0|1|2|3|4|5|6|7|l|o|u|e|@|\[\d+\])")
 
 
+def CircleStrip(entry: str) -> str:
+
+    def replace_color(match_obj):
+        m = match_obj.group(1)
+        match m:
+            case "@":
+                return "@"
+            case _:
+                return ""
+
+    return RE_COLOR.sub(replace_color, entry)
+
+
 def CircleToRich(entry: str, colors: dict = None) -> Text:
 
     custom_colors = DEFAULT_COLORS.copy()
