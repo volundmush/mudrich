@@ -42,6 +42,8 @@ install_mudrich()
 
 You should do this first thing in your program, before importing anything from rich.
 
+There's an included Circle-style and Evennia-style decoder for taking Circle or Evennia markup and turning into Rich.
+
 ## FAQ 
   __Q:__ This is cool! How can I help?  
   __A:__ [Patreon](https://www.patreon.com/volund) support is always welcome. If you can code and have cool ideas or bug fixes, feel free to fork, edit, and pull request! Join our [discord](https://discord.gg/Sxuz3QNU8U) to really get cranking away though.
