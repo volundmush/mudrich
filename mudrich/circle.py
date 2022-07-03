@@ -29,6 +29,7 @@ DEFAULT_COLORS = {
 
 COLOR_MAP = {
     "n": "0",
+
     "d": "0;30",
     "b": "0;34",
     "g": "0;32",
@@ -108,3 +109,86 @@ def CircleToRich(entry: str, colors: dict = None) -> Text:
     out_text = RE_COLOR.sub(replace_color, entry)
 
     return AnsiDecoder().decode_line(out_text)
+
+
+DEFAULT_EVMAP = {
+    "0": "|n",  # Normal
+
+    "1": "|C",  # Roomname
+    "2": "|G",  # Roomobjs
+    "3": "|Y",  # Roompeople
+    "4": "|R",  # Hityou
+    "5": "|G",  # Youhit
+    "6": "|Y",  # Otherhit
+    "7": "|y",  # Critical
+    "8": "|y",  # Holler
+    "9": "|y",  # Shout
+    "10": "|Y",  # Gossip
+    "11": "|C",  # Auction
+    "12": "|G",  # Congrat
+    "13": "|R",  # Tell
+    "14": "|C",  # Yousay
+    "15": "|W"  # Roomsay
+}
+
+COLOR_MAP_EV = {
+    "n": "|n",
+
+    "d": "|X",
+    "b": "|B",
+    "g": "|G",
+    "c": "|C",
+    "r": "|R",
+    "m": "|M",
+    "y": "|Y",
+    "w": "|W",
+
+    "D": "|x",
+    "B": "|b",
+    "G": "|g",
+    "C": "|c",
+    "R": "|r",
+    "M": "|m",
+    "Y": "|y",
+    "W": "|w",
+
+    "0": "|[X",
+    "1": "|[B",
+    "2": "|[G",
+    "3": "|[C",
+    "4": "|[R",
+    "5": "|[M",
+    "6": "|[Y",
+    "7": "|[W",
+
+    "l": "|^",
+    "u": "|u",
+    "o": "|h",
+    "e": "|*"
+}
+
+
+def CircleToEvennia(entry: str) -> str:
+
+    custom_colors = DEFAULT_EVMAP.copy()
+
+    def replace_color(match_obj):
+        m = match_obj.group(1)
+        match m:
+            case "@":
+                return "||"
+            case "x":
+                code = random.choice(RANDOM_CODES)
+                ansi_codes = COLOR_MAP_EV[code]
+            case _:
+                if m.startswith("["):
+                    code = m[1:][:-1]
+                    if code in custom_colors:
+                        ansi_codes = custom_colors[code]
+                    else:
+                        return m.group(0)
+                else:
+                    ansi_codes = COLOR_MAP_EV[m]
+        return f"{ansi_codes}"
+
+    return RE_COLOR.sub(replace_color, entry)
