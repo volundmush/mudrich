@@ -107,6 +107,8 @@ class MudStyle(OLD_STYLE):
             str: A string containing ANSI style codes.
         """
         out_text = text
+        if mxp:
+            out_text = html.escape(out_text)
         if not out_text:
             return out_text
         if color_system is not None:

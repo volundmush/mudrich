@@ -108,7 +108,7 @@ def CircleToRich(entry: str, colors: dict = None) -> Text:
 
     out_text = RE_COLOR.sub(replace_color, entry)
 
-    return AnsiDecoder().decode_line(out_text)
+    return Text("\n").join(AnsiDecoder().decode(out_text))
 
 
 DEFAULT_EVMAP = {
@@ -191,4 +191,6 @@ def CircleToEvennia(entry: str) -> str:
                     ansi_codes = COLOR_MAP_EV[m]
         return f"{ansi_codes}"
 
-    return RE_COLOR.sub(replace_color, entry)
+    out = RE_COLOR.sub(replace_color, entry)
+    out = out.replace("\r\n", "|/").replace("\n", "|/").replace("\t", "|>")
+    return out

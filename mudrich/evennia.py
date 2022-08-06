@@ -594,4 +594,4 @@ def raw(string):
 
 def EvenniaToRich(s: str) -> Text:
     ev = parse_ansi(s, xterm256=True, mxp=True)
-    return AnsiDecoder().decode_line(ev)
+    return Text("\n").join(AnsiDecoder().decode(ev))
